@@ -9,7 +9,7 @@
 struct Entry {
     std::string value;
     uint64_t sequence_number;  
-    bool is_tombstone;         
+    bool is_tombstone;         //this is true if the entry is deleted
 };
 
 class MemTable {
