@@ -44,6 +44,10 @@ std::optional<Entry> MemTable::Get(const std::string& key) const{
     return it->second; // return entry object
 }
 
+
+// Get size
 size_t MemTable::getSize() const{
     return size_bytes_;
 }
+
+// Begin

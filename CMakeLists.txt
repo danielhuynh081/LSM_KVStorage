@@ -22,3 +22,7 @@ target_compile_options(lsm_functions PRIVATE
     -Wall -Wshadow -Wunreachable-code -Wredundant-decls -Wmissing-declarations
     -Wextra -Wpedantic -Werror)
 
+# Tests
+add_executable(memtable_test tests/memtable_test.cpp)
+target_link_libraries(memtable_test PRIVATE memtable_functions)
+

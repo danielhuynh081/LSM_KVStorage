@@ -20,8 +20,8 @@ public:
     size_t getSize() const;
 
     // Sorted iteration
-    std::map<std::string, Entry>::const_iterator begin() const;
-    std::map<std::string, Entry>::const_iterator end() const;
+    std::map<std::string, Entry>::const_iterator begin() const { return table_.begin(); }
+    std::map<std::string, Entry>::const_iterator end() const { return table_.end(); }
 
 private:
     std::map<std::string, Entry> table_;
