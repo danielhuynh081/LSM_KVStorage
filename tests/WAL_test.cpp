@@ -73,7 +73,7 @@ int main()
     test_WAL_creation();
     test_WAL_Put();
     test_WAL_Delete("key1", 2);
-    clearTestLog();
+    // clearTestLog();
 
     std::cout << "\nAll tests passed" << std::endl;
     return 0;

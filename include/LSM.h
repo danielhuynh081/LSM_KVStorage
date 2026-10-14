@@ -3,34 +3,28 @@
 #include "memtable.h"
 #include "WAL.h"
 #include "SSTable.h"
+#include <vector>
 
 class LSM
 {
-private:
-    MemTable memtable;
-    SSTable sstable;
-    WAL wal;
-    uint64_t sequence = 0;
-
 public:
     LSM() : wal("data/wal.log") {}
     ~LSM() {}
 
     void Put(const std::string &key, const std::string &value)
     {
-        uint64_t next = sequence + 1;
+        // increments the sequence number for each new entry
+        mtSequence += 1;
         // Log into WAL before memtable
-        wal.Put(key, value, next);
-        memtable.Put(key, value, next);
-        sequence = next;
+        wal.Put(key, value, mtSequence);
+        memtable.Put(key, value, mtSequence);
     }
 
     void Delete(const std::string &key)
     {
-        uint64_t next = sequence + 1;
-        wal.Delete(key, next);
-        memtable.Delete(key, next);
-        sequence = next;
+        mtSequence += 1;
+        wal.Delete(key, mtSequence);
+        memtable.Delete(key, mtSequence);
     }
     bool flushSSTable()
     {
@@ -38,4 +32,11 @@ public:
         // Return true if successful, false otherwise
         return true;
     }
+
+private:
+    MemTable memtable;
+    std::vector<SSTable> sstables;
+    WAL wal;
+    uint64_t mtSequence = 0;
+    uint64_t sstSequence = 0;
 };

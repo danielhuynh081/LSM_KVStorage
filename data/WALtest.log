@@ -1,0 +1,2 @@
+PUT 1 "key1" "value1"
+DELETE 2 "key1"

@@ -1,23 +1,17 @@
 #pragma once
-
 #include "memtable.h"
+#include <vector>
 
-struct Table
-{
-    const Entry _Data;
-    int id;
-};
-
+// An SSTable file is created from one MemTable flush
 class SSTable
 {
 public:
-    void Put(const std::string &key, const std::string &value, uint64_t seq);
-
-    // Sorted iteration
-    std::map<std::string, Entry>::const_iterator begin() const { return table_.begin(); }
-    std::map<std::string, Entry>::const_iterator end() const { return table_.end(); }
+    SSTable() {}
+    ~SSTable() {}
+    void Flush(const MemTable &memtable, uint64_t seq);
+    // std::optional<Entry> Get(const std::string &key) const;
 
 private:
-    std::map<std::string, Entry> table_;
-    size_t size_bytes_ = 0;
+    std::string filePath_;
+    // std::map<std::string, uint64_t> index_;
 };
