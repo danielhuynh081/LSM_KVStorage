@@ -8,6 +8,7 @@ class LSM
 {
 private:
     MemTable memtable;
+    SSTable sstable;
     WAL wal;
     uint64_t sequence = 0;
 
