@@ -6,17 +6,19 @@
 #include <cstdint>
 #include <cstddef>
 
-struct Entry {
+struct Entry
+{
     std::string value;
-    uint64_t sequence_number;  
-    bool is_tombstone;         //this is true if the entry is deleted
+    uint64_t sequence_number;
+    bool is_tombstone; // this is true if the entry is deleted
 };
 
-class MemTable {
+class MemTable
+{
 public:
-    void Put(const std::string& key, const std::string& value, uint64_t seq);
-    void Delete(const std::string& key, uint64_t seq);
-    std::optional<Entry> Get(const std::string& key) const;
+    void Put(const std::string &key, const std::string &value, uint64_t seq);
+    void Delete(const std::string &key, uint64_t seq);
+    std::optional<Entry> Get(const std::string &key) const;
     size_t getSize() const;
 
     // Sorted iteration

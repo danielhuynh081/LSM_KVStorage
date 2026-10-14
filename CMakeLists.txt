@@ -15,14 +15,24 @@ target_compile_options(memtable_functions PRIVATE
     -Wall -Wshadow -Wunreachable-code -Wredundant-decls -Wmissing-declarations
     -Wextra -Wpedantic -Werror)
 
-# LSM_Tree
-add_library(lsm_functions STATIC src/lsm_tree.cpp)
-target_include_directories(lsm_functions PUBLIC include)
-target_compile_options(lsm_functions PRIVATE
+# WAL 
+add_library(WAL_functions STATIC src/WAL.cpp)
+target_include_directories(WAL_functions PUBLIC include)
+target_compile_options(WAL_functions PRIVATE
+    -Wall -Wshadow -Wunreachable-code -Wredundant-decls -Wmissing-declarations
+    -Wextra -Wpedantic -Werror)
+
+# LSM 
+add_library(LSM_tree STATIC src/LSM.cpp)
+target_include_directories(LSM_tree PUBLIC include)
+target_compile_options(LSM_tree PRIVATE
     -Wall -Wshadow -Wunreachable-code -Wredundant-decls -Wmissing-declarations
     -Wextra -Wpedantic -Werror)
 
 # Tests
 add_executable(memtable_test tests/memtable_test.cpp)
+add_executable(WAL_test tests/WAL_test.cpp)
+
 target_link_libraries(memtable_test PRIVATE memtable_functions)
+target_link_libraries(WAL_test PRIVATE WAL_functions)
 

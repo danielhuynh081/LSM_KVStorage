@@ -13,7 +13,8 @@ private:
     uint64_t sequence = 0;
 
 public:
-    LSMStore() : wal("data/wal.log") {}
+    LSM() : wal("data/wal.log") {}
+    ~LSM() {}
 
     void Put(const std::string &key, const std::string &value)
     {
