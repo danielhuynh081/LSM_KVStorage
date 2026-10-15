@@ -2,6 +2,7 @@
 #include "memtable.h"
 #include <string>
 #include <vector>
+#include <optional>
 
 // An SSTable file is created from one MemTable flush
 class SSTable
@@ -12,14 +13,14 @@ public:
         uint64_t id = FindNextSSTableId();
         filePath_ = "data/sst_" + std::to_string(id) + ".db";
     }
-    SSTable(const std::string &path) : filePath_(path)
-    {
-    }
     ~SSTable() {}
-    std::string getpath() { return filePath_; }
 
+    // Getters
+    std::string getpath() { return filePath_; }
+    std::optional<Entry> Get(const std::string &key) const;
+
+    // Disk interaction
     void Flush(const MemTable &memtable);
-    // std::optional<Entry> Get(const std::string &key) const;
 
 private:
     std::string filePath_;
