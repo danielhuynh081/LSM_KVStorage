@@ -3,6 +3,9 @@
 #include <fstream>
 #include <iomanip>
 #include <stdexcept>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 void SSTable::Flush(const MemTable &memtable)
 {
@@ -48,4 +51,40 @@ void SSTable::Flush(const MemTable &memtable)
     {
         throw std::runtime_error("Failed to close SSTable");
     }
+}
+
+uint64_t SSTable::FindNextSSTableId()
+{
+    uint64_t maxId = 0;
+
+    fs::create_directories("data");
+
+    for (const auto &file : fs::directory_iterator("data"))
+    {
+        if (!file.is_regular_file())
+            continue;
+
+        std::string filename = file.path().filename().string();
+
+        if (filename.rfind("sst_", 0) != 0 ||
+            file.path().extension() != ".db")
+            continue;
+
+        std::string number = filename.substr(4, filename.size() - 7);
+
+        try
+        {
+            size_t parsed = 0;
+            uint64_t id = std::stoull(number, &parsed);
+
+            if (parsed == number.size())
+                maxId = std::max(maxId, id);
+        }
+        catch (const std::exception &)
+        {
+            continue;
+        }
+    }
+
+    return maxId + 1;
 }

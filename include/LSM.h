@@ -39,5 +39,4 @@ private:
     WAL wal;
 
     uint64_t mtSequence = 0;
-    uint64_t FindNextSSTableId();
 };
