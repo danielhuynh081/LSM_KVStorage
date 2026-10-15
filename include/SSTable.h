@@ -6,12 +6,12 @@
 class SSTable
 {
 public:
-    SSTable() {}
+    SSTable(const std::string &path) : filePath_(path) {}
     ~SSTable() {}
-    void Flush(const MemTable &memtable, uint64_t seq);
+    void Flush(const MemTable &memtable);
     // std::optional<Entry> Get(const std::string &key) const;
 
 private:
     std::string filePath_;
-    // std::map<std::string, uint64_t> index_;
+    std::map<std::string, uint64_t> index_;
 };

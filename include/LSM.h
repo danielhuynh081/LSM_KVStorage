@@ -37,6 +37,7 @@ private:
     MemTable memtable;
     std::vector<SSTable> sstables;
     WAL wal;
+
     uint64_t mtSequence = 0;
-    uint64_t sstSequence = 0;
+    uint64_t FindNextSSTableId();
 };

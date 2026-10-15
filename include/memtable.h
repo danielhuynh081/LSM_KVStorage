@@ -16,6 +16,8 @@ struct Entry
 class MemTable
 {
 public:
+    MemTable() { size_bytes_ = 0; };
+    ~MemTable() {};
     void Put(const std::string &key, const std::string &value, uint64_t seq);
     void Delete(const std::string &key, uint64_t seq);
     std::optional<Entry> Get(const std::string &key) const;
@@ -27,5 +29,5 @@ public:
 
 private:
     std::map<std::string, Entry> table_;
-    size_t size_bytes_ = 0;
+    size_t size_bytes_;
 };
